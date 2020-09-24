@@ -1,20 +1,12 @@
 import React from "react";
-import { Statistic, Spin, Image, Row, Col } from "antd";
+import { Statistic, Image, Row, Col } from "antd";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 
-import {
-  selectRandomActivity,
-  selectRandomActivityStatus
-} from "./dashboardSlice";
-import StatusEnum from "../../constants/StatusEnum";
+import { selectRandomActivity } from "./dashboardSlice";
 
 const Modal = () => {
   const selectedActivity = useSelector(selectRandomActivity);
-  const status = useSelector(selectRandomActivityStatus);
-
-  if (status !== StatusEnum.succeeded) {
-    return <Spin size="large" />;
-  }
 
   const {
     accessibility,
@@ -27,7 +19,7 @@ const Modal = () => {
 
   return (
     <>
-      <Image src={imageUrl} />
+      <RoundedImage src={imageUrl} />
       <Statistic title="Activity" value={activity} />
       <Row>
         <Col span={12}>
@@ -48,5 +40,9 @@ const Modal = () => {
     </>
   );
 };
+
+const RoundedImage = styled(Image)`
+  border-radius: 50%;
+`;
 
 export default Modal;

@@ -1,16 +1,13 @@
 import React from "react";
-import { Image, Table, Spin } from "antd";
-import { useSelector } from "react-redux";
-
-import { selectActivitiesAreLoading } from "./dashboardSlice";
-import StatusEnum from "../../constants/StatusEnum";
+import { Image, Table } from "antd";
+import styled from "styled-components";
 
 const columns = [
   {
     title: "",
     dataIndex: "imageUrl",
     key: "imageUrl",
-    render: url => <Image src={url} width={220} />
+    render: url => <StyledImage src={url} preview={true} />
   },
   {
     title: "Activity",
@@ -35,27 +32,40 @@ const columns = [
     dataIndex: "price",
     key: "price",
     sorter: (a, b) => a.price - b.price
-  },
-  {
-    title: "Accessibility",
-    dataIndex: "accessibility",
-    key: "accessibility",
-    sorter: (a, b) => a.accessibility - b.accessibility
   }
 ];
 
-export default function DashboardTable({ data }) {
-  const status = useSelector(selectActivitiesAreLoading);
-
+const DashboardTable = ({ data }) => {
   const pagination = {
     pageSize: 10,
     size: "small",
     simple: true
   };
 
-  if (status !== StatusEnum.succeeded) {
-    return <Spin size="large" />;
-  }
+  const refinedDataSource = data.map((activity, index) => ({
+    key: index,
+    ...activity
+  }));
 
-  return <Table columns={columns} dataSource={data} pagination={pagination} />;
-}
+  return (
+    <StyledTable
+      columns={columns}
+      dataSource={refinedDataSource}
+      pagination={pagination}
+    />
+  );
+};
+
+const StyledTable = styled(Table)`
+  border-radius: 20px;
+`;
+
+const StyledImage = styled(Image)`
+  height: auto%;
+  min-width: 2vh;
+  max-width: 20vh;
+  vertical-align: text-bottom;
+  width: 100%;
+`;
+
+export default DashboardTable;

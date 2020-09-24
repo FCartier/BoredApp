@@ -7,7 +7,7 @@ import StatusEnum from "../../constants/StatusEnum";
 export const fetchActivities = createAsyncThunk(
   "dashboard/fetchActivities",
   async () => {
-    const response = await get("/list");
+    const response = await get("/list/20");
     return response;
   }
 );
@@ -34,7 +34,7 @@ export const dashboardSlice = createSlice({
   // Dashboard reducers
   reducers: {
     setSearchedValue: (state, action) => {
-      state.searchedValue = action.payload;
+      state.searchedValue = action.payload.toLocaleLowerCase();
     }
   },
   // Thunk reducers
@@ -45,7 +45,7 @@ export const dashboardSlice = createSlice({
     },
     [fetchActivities.fulfilled]: (state, action) => {
       state.status = StatusEnum.succeeded;
-      state.activities = action.payload;
+      state.activities = action.payload.concat(state.activities);
     },
     [fetchActivities.rejected]: (state, action) => {
       state.status = StatusEnum.failed;
@@ -77,14 +77,17 @@ export const selectActivities = state => {
   if (searchedValue) {
     return activities.filter(
       activity =>
-        activity.activity.includes(searchedValue) ||
-        activity.type.includes(searchedValue)
+        activity.activity.toLocaleLowerCase().includes(searchedValue) ||
+        activity.type.toLocaleLowerCase().includes(searchedValue)
     );
   }
   return activities;
 };
 
-export const selectActivitiesAreLoading = state => state.dashboard.status;
+export const selectActivitiesAreLoading = state => {
+  const { status } = state.dashboard;
+  return status === StatusEnum.loading || status === StatusEnum.idle;
+};
 export const selectRandomActivity = state => state.dashboard.randomActivity;
 export const selectRandomActivityStatus = state =>
   state.dashboard.randomActivityStatus;

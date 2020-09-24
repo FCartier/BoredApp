@@ -1,68 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Bored App
 
-## Available Scripts
+Bored App is a little Simple Page Application made out of React using [Create React App](https://github.com/facebook/create-react-app), [Redux](https://redux.js.org/) and the [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
-In the project directory, you can run:
+The web application uses the [Bored API ](https://bored-api.firebaseapp.com/) to retrieve ideas of activities to do when you are stuck at home. You can see a deployed version of the app here : [https://bored-app.vercel.app/](https://bored-app.vercel.app/)
 
-### `yarn start`
+I worked on this project for 2 hours a day, almost everyday for a week ( 10 hours in total ). Because of this availability limitation, I decided to implement a basic application with the following features:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Retrieve a list of activities from the server and displays it in a table
+- Implement the ability to filter each column of the table (except the image of course)
+- Add a button to retrieve more activities from the server and add a pagination to the table
+- Add a search bar allowing the user to search by name and type
+- Add a button to call the server and display a random activity in a modal
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The application uses CSS-in-JS through [Styled-components](https://styled-components.com/).
 
-### `yarn test`
+## Getting started
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Start by cloning the repository
 
-### `yarn build`
+```
+git clone https://github.com/FCartier/BoredApp.git && cd $_
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Then install the required dependecies
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+yarn install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Finally, launch the application
 
-### `yarn eject`
+```
+yarn start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Stack explanation
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Working with React and Redux for a couples of years, I've got surprised by the existence of [Redux-toolkit](https://redux-toolkit.js.org/) and the fact that the redux documentation recommends using it. This project was the perfect opportunity to discover it and learn a bunch of new things along the way, so I chose redux-toolkit instead of the classic react-redux implementation.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Doing so, I discovered the Slices, which combine the actions and the reducers in the same place.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Last but not least, I tried to follow the redux-toolkit recommendations and organized the code by features instead of actions / reducers / pages.
 
-## Learn More
+## Roadmap
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+I really enjoyed working on this project and will improve it in the following weeks. Here is what I plan to do:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Improve the code structure : Split the dashboard feature folder slice into several little ones (Table, Searchbar, Activity generation)
+- Add a way to mark some ideas as favourite and have access to them
+- Improve the general design of the app, I am thinking about giving a try to [Neumorphism design](https://uxdesign.cc/neumorphism-in-user-interfaces-b47cef3bf3a6)
 
-### Code Splitting
+## Final words
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Thanks for taking the time to read this document and I hope you liked the project. Happy coding!

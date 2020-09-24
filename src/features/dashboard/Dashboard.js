@@ -9,29 +9,39 @@ import {
   fetchActivity,
   fetchActivities,
   selectActivities,
-  setSearchedValue
+  setSearchedValue,
+  selectActivitiesAreLoading,
+  selectRandomActivityStatus
 } from "./dashboardSlice";
+import StatusEnum from "../../constants/StatusEnum";
 
 const { Search } = Input;
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
+  const [modalVisibily, setModalVisibily] = useState(false);
   const activities = useSelector(selectActivities);
-  const dashboardStatus = useSelector(state => state.dashboard.status);
+  const fetchStatus = useSelector(state => state.dashboard.status);
+  const activitiesAreLoading = useSelector(selectActivitiesAreLoading);
+  const randomActivityStatus = useSelector(selectRandomActivityStatus);
 
   useEffect(() => {
-    if (dashboardStatus === "idle") {
+    if (fetchStatus === StatusEnum.idle) {
       dispatch(fetchActivities());
     }
-  }, [dashboardStatus, dispatch]);
+  }, [fetchStatus, dispatch]);
 
   const handleRandomActivity = () => {
     dispatch(fetchActivity());
-    setShowModal(true);
   };
 
-  const hideModal = () => setShowModal(false);
+  useEffect(() => {
+    if (randomActivityStatus === StatusEnum.succeeded) {
+      setModalVisibily(true);
+    }
+  }, [randomActivityStatus]);
+
+  const hideModal = () => setModalVisibily(false);
 
   return (
     <>
@@ -40,28 +50,34 @@ export default function Dashboard() {
         <p>Bored at home? Pick an activity below!</p>
       </Header>
       <RefreshButtonWrapper>
-        <Button shape="flat" onClick={() => dispatch(fetchActivities())}>
-          Refresh ideas
+        <Button
+          shape="flat"
+          onClick={() => dispatch(fetchActivities())}
+          loading={activitiesAreLoading}
+        >
+          Fetch new ideas
         </Button>
       </RefreshButtonWrapper>
       <SearchWrapper>
         <SearchBar
           placeholder="Search by Type or Name"
-          onSearch={value =>
-            dispatch(setSearchedValue(value.toLocaleLowerCase()))
-          }
+          onSearch={value => dispatch(setSearchedValue(value))}
           enterButton
         />
       </SearchWrapper>
       <ActivityGeneratorWrapper>
-        <Button shape="flat" onClick={() => handleRandomActivity()}>
+        <Button
+          shape="flat"
+          onClick={() => handleRandomActivity()}
+          loading={randomActivityStatus === StatusEnum.loading}
+        >
           Generate
         </Button>
       </ActivityGeneratorWrapper>
       <TableWrapper>
         <DashboardTable data={activities} />
       </TableWrapper>
-      <Modal visible={showModal} onOk={hideModal} onCancel={hideModal}>
+      <Modal visible={modalVisibily} onOk={hideModal} onCancel={hideModal}>
         <DashBoardModal />
       </Modal>
     </>
@@ -83,7 +99,6 @@ const Header = styled.div`
   grid-area: header;
   font-size: 2em;
   margin-top: 3em;
-  width: 100%;
   justify-self: center;
   text-align: center;
   font-family: Baloo;
