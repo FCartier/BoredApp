@@ -4,7 +4,7 @@ Bored App is a little Simple Page Application made out of React using [Create Re
 
 The web application uses the [Bored API ](https://bored-api.firebaseapp.com/) to retrieve ideas of activities to do when you are stuck at home. You can see a deployed version of the app here : [https://bored-app.vercel.app/](https://bored-app.vercel.app/)
 
-I worked on this project for 2 hours a day, almost everyday for a week ( 10 hours in total ). Because of this availability limitation, I decided to implement a basic application with the following features:
+I worked on this project for 2 hours a day, almost everyday during 5 days ( 10 hours in total ). Because of this availability limitation, I decided to implement a basic application with the following features:
 
 - Retrieve a list of activities from the server and displays it in a table
 - Implement the ability to filter each column of the table (except the image of course)
