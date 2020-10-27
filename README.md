@@ -44,7 +44,7 @@ Last but not least, I tried to follow the redux-toolkit recommendations and orga
 
 ## Roadmap
 
-I really enjoyed working on this project and will improve it in the following weeks. Here is what I plan to do:
+I really enjoyed working on this project and might improve it in the following weeks. Here is what I plan to do:
 
 - Improve the code structure : Split the dashboard feature folder slice into several little ones (Table, Searchbar, Activity generation)
 - Add a way to mark some ideas as favourite and have access to them
